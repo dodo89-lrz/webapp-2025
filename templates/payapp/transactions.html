@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Transactions{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <h4>Sent Transactions</h4>
+    <ul class="list-group">
+      {% for txn in sent_transactions %}
+        <li class="list-group-item">
+          Sent <strong>{{ txn.amount }} {{ txn.sender.account.currency }}</strong>
+          to {{ txn.recipient.username }} on {{ txn.timestamp|date:"Y-m-d H:i" }}
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted">No sent transactions.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="col-md-6">
+    <h4>Received Transactions</h4>
+    <ul class="list-group">
+      {% for txn in received_transactions %}
+        <li class="list-group-item">
+          Received <strong>{{ txn.amount }} {{ txn.sender.account.currency }}</strong>
+          from {{ txn.sender.username }} on {{ txn.timestamp|date:"Y-m-d H:i" }}
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted">No received transactions.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<hr class="my-4">
+
+<h4>Pending Payment Requests</h4>
+<ul class="list-group">
+  {% for req in payment_requests %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ req.requester.username }} requests
+      <strong>{{ req.amount }} {{ req.requester.account.currency }}</strong>
+      <div>
+        <a href="{% url 'process_payment_request' req.id 'accept' %}" class="btn btn-sm btn-success">Accept</a>
+        <a href="{% url 'process_payment_request' req.id 'reject' %}" class="btn btn-sm btn-danger">Reject</a>
+      </div>
+    </li>
+  {% empty %}
+    <li class="list-group-item text-muted">No pending requests.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

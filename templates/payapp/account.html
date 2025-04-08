@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Account{% endblock %}
+{% block content %}
+<div class="card mx-auto" style="max-width: 500px;">
+  <div class="card-body">
+    <h3 class="card-title">Welcome, {{ account.user.username }} 👋</h3>
+    <p class="card-text"><strong>Currency:</strong> {{ account.currency }}</p>
+    <p class="card-text"><strong>Balance:</strong> {{ account.balance }} {{ account.currency }}</p>
+    <hr>
+    <a href="{% url 'send_payment' %}" class="btn btn-primary me-2">Send Payment</a>
+    <a href="{% url 'request_payment' %}" class="btn btn-secondary me-2">Request Payment</a>
+    <a href="{% url 'transactions' %}" class="btn btn-outline-dark">View Transactions</a>
+  </div>
+</div>
+{% endblock %}

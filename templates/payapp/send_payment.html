@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Send Payment{% endblock %}
+{% block content %}
+<div class="col-md-6 offset-md-3">
+  <h2 class="mb-4">Send Payment</h2>
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="recipient" class="form-label">Recipient Username</label>
+      <input type="text" class="form-control" name="recipient" required>
+    </div>
+    <div class="mb-3">
+      <label for="amount" class="form-label">Amount ({{ request.user.account.currency }})</label>
+      <input type="number" class="form-control" name="amount" step="0.01" required>
+    </div>
+    <button type="submit" class="btn btn-success">Send</button>
+  </form>
+</div>
+{% endblock %}
